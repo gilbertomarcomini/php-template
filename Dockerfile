@@ -26,10 +26,7 @@ RUN docker-php-ext-install intl zip mysqli pdo pdo_mysql gd \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && composer --version
 
-WORKDIR /app
-
 COPY docker/config/ /
-
 COPY docker/scripts/ /
 
 RUN if [ -z "`getent group 1000`" ]; then \
@@ -42,7 +39,6 @@ fi
 
 RUN chmod +x /docker-entrypoint.sh
 RUN chown -Rf www:www /app && chown -Rf www:www /var/lib/nginx/
-
 RUN chown -Rf www-data:www-data /app && chown -Rf www-data:www-data /var/lib/nginx/
 
 ENTRYPOINT ["sh", "/docker-entrypoint.sh", "api"]
