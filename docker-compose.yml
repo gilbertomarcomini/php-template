@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+
+  api.php.dev:
+    container_name: api.php.dev
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./api:/app
+    ports:
+      - "8080:80"
+    networks:
+      - bubble
+
+  mysql.php.dev:
+    container_name: mysql.php.dev
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - bubble
+    ports:
+      - "3306:3306"
+
+networks:
+  bubble:
+    external: true
