@@ -18,7 +18,7 @@
 						</div>
                         <div class="form-group">
                             <label for="name">Categorias</label>
-                            <select name="category[]" class="form-control selectpicker" multiple="" data-live-search="true" title="Categorias">
+                            <select name="categories[]" class="form-control selectpicker" multiple="" data-live-search="true" title="Categorias">
                                 @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach()
@@ -40,6 +40,16 @@
 						<br />
 						<button type="submit" class="btn btn-primary">Salvar</button>
 	                </form>
+                    <br />
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

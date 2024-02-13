@@ -17,17 +17,27 @@
 						    <input type="text" class="form-control" name="name" id="name" placeholder="Nome" value="{{ $category->name }}">
 						</div>
                         <div class="form-group">
-                            <img src="http://192.168.22.10/laravel/public/images/category/{{ $category->image }}"  width="10%" />
-                            <input type="hidden" name="deleteimage" value="{{ $category->image }}">
+                            <img src="{{ url('/') }}/images/category/{{ $category->image }}"  width="10%" />
+                            <input type="hidden" name="deleted_image" value="{{ $category->image }}">
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <input name="image" type="file">
+                                <input type="file" name="image">
                             </div>
                         </div>
 						<br />
 						<button type="submit" class="btn btn-primary">Salvar</button>
 	                </form>
+                    <br />
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

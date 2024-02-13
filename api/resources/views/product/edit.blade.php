@@ -18,9 +18,9 @@
 						</div>
                         <div class="form-group">
                             <label for="name">Categorias</label>
-                            <select name="category[]" class="form-control selectpicker" multiple="" data-live-search="true" title="Categorias">
+                            <select name="categories[]" class="form-control selectpicker" multiple="" data-live-search="true" title="Categorias">
                                 <?php foreach($categories as $category){ ?>
-                                    <option value="<?= $category->id ?>" <?= in_array($category->id, $selected_cat) ? "selected" : NULL ; ?>><?= $category->name ?></option>
+                                    <option value="<?= $category->id ?>" <?= in_array($category->id, $selected) ? "selected" : NULL ; ?>><?= $category->name ?></option>
                                 <?php } ?>
                             </select>
                             <p class="help-block">Use Crtl para selecionar.</p>
@@ -46,6 +46,16 @@
 						<br />
 						<button type="submit" class="btn btn-primary">Salvar</button>
 	                </form>
+                    <br />
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

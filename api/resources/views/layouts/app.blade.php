@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Produtos') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -40,8 +40,8 @@
                     <!-- Left Side Of Navbar -->
                     @if (!Auth::guest())
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ route('product.index') }}">Produtos</a></li>
                             <li><a href="{{ route('category.index') }}">Categorias</a></li>
+                            <li><a href="{{ route('product.index') }}">Produtos</a></li>
                         </ul>
                     @endif
 
@@ -49,8 +49,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @guest
-                            <li><a href="">Login</a></li>
-                            <li><a href="">Register</a></li>
+                            <li><a href="{{ route('category.index') }}">Categorias</a></li>
+                            <li><a href="{{ route('product.index') }}">Produtos</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

@@ -18,11 +18,11 @@
                             <input type="text" class="form-control" id="name" name="name" placeholder="Produto">
                         </div>
                         <div class="form-group" style="width: 200px; max-width: 200px;">
-                            <select name="category[]" class="form-control selectpicker" multiple="" data-live-search="true" title="Categorias">
-                                <?php 
+                            <select name="categories[]" class="form-control selectpicker" multiple="" data-live-search="true" title="Categorias">
+                                <?php
                                 if(!empty($categories)){
                                     foreach($categories as $category){ ?>
-                                    <option value="<?= $category->id ?>" <?= in_array($category->id, $selected_cat) ? "selected" : NULL ; ?>><?= $category->name ?></option>
+                                    <option value="<?= $category->id ?>" <?= in_array($category->id, $selected) ? "selected" : NULL ; ?>><?= $category->name ?></option>
                                 <?php }
                             } ?>
                             </select>
@@ -53,6 +53,9 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <div align="center">
+                        {!! is_object($products) && method_exists($products, 'links') ? $products->links() : null !!}
+                    </div>
                 </div>
             </div>
         </div>
