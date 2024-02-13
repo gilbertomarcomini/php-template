@@ -1,6 +1,8 @@
 /vendor/
+/node_modules/
+/.vagrant
+
 /api/vendor/
-node_modules/
 /api/node_modules/
 /api/npm-debug.log
 /api/yarn-error.log
@@ -21,5 +23,4 @@ node_modules/
 /api/.env
 /api/Homestead.yaml
 /api/Homestead.json
-/.vagrant
 /api/.phpunit.result.cache
