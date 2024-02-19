@@ -25,7 +25,8 @@ Route::post('/categorias/salvar', [CategoryController::class, 'save'])->name('ca
 Route::get('/categorias/editar/{id}', [CategoryController::class, 'edit'])->name('category.edit');
 Route::post('/categorias/editar/{id}', [CategoryController::class, 'update'])->name('category.update');
 Route::get('/categorias/deletar/{id}', [CategoryController::class, 'delete'])->name('category.delete');
-Route::put('/categorias/buscar', [CategoryController::class, 'search'])->name('category.search');
+Route::get('/categorias/buscar', [CategoryController::class, 'search'])->name('category.search');
+Route::post('/categorias/buscar', [CategoryController::class, 'search'])->name('category.search');
 
 Route::get('/produtos', [ProductController::class, 'index'])->name('product.index');
 Route::get('/produtos/adicionar', [ProductController::class, 'add'])->name('product.add');
@@ -33,4 +34,5 @@ Route::post('/produtos/salvar', [ProductController::class, 'save'])->name('produ
 Route::get('/produtos/editar/{id}', [ProductController::class, 'edit'])->name('product.edit');
 Route::post('/produtos/editar/{id}', [ProductController::class, 'update'])->name('product.update');
 Route::get('/produtos/deletar/{id}', [ProductController::class, 'delete'])->name('product.delete');
-Route::put('/produtos/buscar', [ProductController::class, 'search'])->name('product.search');
+Route::post('/produtos/buscar', [ProductController::class, 'search'])->name('product.search');
+Route::get('/produtos/buscar', [ProductController::class, 'search'])->name('product.search');
