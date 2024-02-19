@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 use App\Services\ProductService;
 use App\Services\CategoryService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -21,10 +21,11 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        $products = $this->productService->findAll();
+        $products = $this->productService->findPaginate(10);
         $categories = $this->categoryService->findAll();
+        $selected = [];
 
-        return view('product.index', compact('products', 'categories', []));
+        return view('product.index', compact('products', 'categories', 'selected'));
     }
 
     /**
@@ -32,8 +33,8 @@ class ProductController extends Controller
      */
     public function add(): View
     {
-    	$categories = $this->categoryService->findAll();
-    	return view('product.add', compact('categories'));
+        $categories = $this->categoryService->findAll();
+        return view('product.add', compact('categories'));
     }
 
     /**
@@ -42,14 +43,12 @@ class ProductController extends Controller
      */
     public function save(Request $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|min:10|max:255',
-            'description' => 'required',
+        $request->validate([
+            'name' => 'required|min:1|max:255',
+            'description' => 'sometimes',
         ]);
 
-        if(!$validator->fails()){
-            $this->productService->create($request->all());
-        }
+        $this->productService->create($request->all());
 
         return redirect()->route('product.index');
     }
@@ -62,14 +61,14 @@ class ProductController extends Controller
     {
         $product = $this->productService->find($id);
         $categories = $this->categoryService->findAll();
-        $selected_cat = [];
+        $selected = [];
         $images = $product->images;
 
         if (!empty($product->categories)) {
             foreach ($product->categories as $category) {
-                $selected_cat[] = $category->pivot->category_id;
+                $selected[] = $category->pivot->category_id;
             }
-            return view('product.edit', compact('product', 'categories', 'selected_cat', 'images'));
+            return view('product.edit', compact('product', 'categories', 'selected', 'images'));
         }
 
         return redirect()->route('product.index');
@@ -82,6 +81,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id): RedirectResponse
     {
+        $request->validate([
+            'name' => 'required|min:1|max:255',
+            'description' => 'sometimes',
+        ]);
+
         $this->productService->update($id, $request->all());
 
         return redirect()->route('product.index');
@@ -104,12 +108,20 @@ class ProductController extends Controller
      */
     public function search(Request $request): View
     {
-        $name = $request->input('name');
-        $categoriesSearch = $request->input('categories') ?: [];
-        $products = $this->productService->search($name, $categoriesSearch);
-
+        $search = $request->input('name');
+        $selected = $request->input('categories') ?: [];
+        $products = $this->productService->search($search, $selected);
         $categories = $this->categoryService->findAll();
 
-        return view('product.index', compact('products', 'categories', 'selected_cat', 'search'));
+        return view('product.index', compact('products', 'categories', 'selected', 'search'));
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function api(): JsonResponse
+    {
+        $categories = $this->productService->findAll();
+        return response()->json($categories);
     }
 }
