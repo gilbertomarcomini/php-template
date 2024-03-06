@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
- 	protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'description'];
 
     /**
      * @return BelongsToMany
@@ -22,6 +22,6 @@ class Product extends Model
      */
     public function images(): HasMany
     {
-       return $this->hasMany(ProductImages::class);
+        return $this->hasMany(ProductImages::class);
     }
 }

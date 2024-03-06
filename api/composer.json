@@ -47,7 +47,9 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "phpcs": "phpcs --standard=PSR2"
+        "phpcs": "phpcs --standard=PSR2",
+        "phpcbf": "phpcbf --standard=PSR2",
+        "phpunit": "phpunit"
     },
     "extra": {
         "laravel": {

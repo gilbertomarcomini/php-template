@@ -45,7 +45,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|min:1|max:255',
-            'description' => 'sometimes',
+            'description' => 'sometimes'
         ]);
 
         $this->productService->create($request->all());
@@ -110,8 +110,9 @@ class ProductController extends Controller
     {
         $search = $request->input('name');
         $selected = $request->input('categories') ?: [];
-        $products = $this->productService->search($search, $selected);
         $categories = $this->categoryService->findAll();
+
+        $products = $this->productService->search($search, $selected);
 
         return view('product.index', compact('products', 'categories', 'selected', 'search'));
     }

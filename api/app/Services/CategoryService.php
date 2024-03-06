@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Enums\ImagePath;
 use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -8,8 +9,6 @@ use Illuminate\Support\Collection;
 
 class CategoryService
 {
-    const IMAGE_PATH = 'images/category';
-
     public function __construct(
         protected CategoryRepository $categoryRepository
     ) {
@@ -50,7 +49,7 @@ class CategoryService
         $name = Arr::get($data, 'name');
         $image = Arr::get($data, 'image');
 
-        $fileName = FileService::move($image, self::IMAGE_PATH);
+        $fileName = FileService::move($image, ImagePath::CATEGORY->value);
         if (!is_null($fileName)) {
             return $this->categoryRepository->create([
                 'name' => $name,
@@ -75,9 +74,9 @@ class CategoryService
                 'name' => $newName
             ];
             if (!empty($newImage)) {
-                $fileName = FileService::move($newImage, self::IMAGE_PATH);
+                $fileName = FileService::move($newImage, ImagePath::CATEGORY->value);
                 $update['image'] = $fileName;
-                FileService::delete($deletedImage, self::IMAGE_PATH);
+                FileService::delete($deletedImage, ImagePath::CATEGORY->value);
             }
             return $category->update($update);
         }
@@ -93,7 +92,7 @@ class CategoryService
         $category = $this->categoryRepository->find($id);
 
         if (!empty($category)) {
-            FileService::delete($category->image, self::IMAGE_PATH);
+            FileService::delete($category->image, ImagePath::CATEGORY->value);
             $category->products()->detach();
             return $category->delete();
         }

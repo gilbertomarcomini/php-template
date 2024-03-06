@@ -10,7 +10,6 @@
                 <div class="panel-body">
                     <form class="form-inline" action="{{ route('product.search') }}" method="POST">
                         {{ csrf_field() }}
-                        <input type="hidden" name="_method" value="put">
                         <div class="form-group" style="float: right;">
                             <p><a href="{{route('product.add')}}" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-plus"></i> Adicionar</a></p>
                         </div>

@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
 {
-	protected $fillable = ['name', 'image'];
+    protected $fillable = ['name', 'image'];
 
     /**
      * @return BelongsToMany
      */
     public function products(): BelongsToMany
     {
-       return $this->belongsToMany('App\Models\Product', 'products_categories');
+        return $this->belongsToMany('App\Models\Product', 'products_categories');
     }
 }
